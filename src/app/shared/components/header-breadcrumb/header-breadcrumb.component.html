@@ -1,0 +1,192 @@
+<!-- PAGE-HEADER -->
+<div class="page-header">
+  <div>
+    <h1 class="page-title">{{ title }}</h1>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" *ngFor="let item of items">
+        <a href="javascript:;">{{ item }}</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{ active_item }}
+      </li>
+    </ol>
+  </div>
+  <div
+    class="ms-auto pageheader-btn"
+    style="display: inherit; align-items: center"
+  >
+    <div *ngFor="let button of headBreadBtns">
+      <div
+        *ngIf="button.button === 'dropdown'"
+        ngbDropdown
+        class="btn-group mt-2 mb-2 me-2"
+        style="width: 170px"
+      >
+        <button
+          (click)="GetValueLane(warningmodal, button)"
+          [disabled]="loadData"
+          style="width: 170px"
+          type="button"
+          class="btn btn-{{ button.color }} text-white dropdown-toggle"
+          ngbDropdownToggle
+        >
+          <svg
+            *ngIf="button.type_icon === 'svg'"
+            width="19"
+            height="19"
+            style="margin-bottom: 6px"
+          >
+            <use
+              xlink:href="../../../../assets/iconfonts/my-icon/tollbooth_icon.svg#toll-booth"
+            ></use>
+          </svg>
+          <i
+            *ngIf="button.type_icon === 'icon'"
+            class="{{ button.icon }} mx-2"
+            style="font-size: 15px"
+          ></i>
+          {{ button.title }}
+        </button>
+        <div ngbDropdownMenu class="mt-2" style="text-align: center">
+          <button
+            [disabled]="loadData"
+            ngbDropdownItem
+            *ngFor="let option of button.children"
+            (click)="changeValue(button, option)"
+          >
+            {{ option.title }}
+            <div class="dropdown-divider"></div>
+          </button>
+        </div>
+      </div>
+
+      <div
+        *ngIf="button.button === 'input' && button.type === 'date'"
+        class="btn-group mt-2 mb-2 me-2"
+      >
+        <button
+          [disabled]="loadData"
+          type="button"
+          class="btn btn-{{ button.color }} text-white"
+        >
+          <i class="{{ button.icon }} tx-16 lh-0 op-6"></i>
+        </button>
+        <div class="btn btn-{{ button.color }}" style="width: 110px">
+          <input
+            [disabled]="loadData"
+            (click)="date.toggle()"
+            placeholder="Ngày..."
+            name="dp"
+            [(ngModel)]="model"
+            ngbDatepicker
+            #date="ngbDatepicker"
+            autocomplete="off"
+            (ngModelChange)="selectDateFunc(model)"
+            style="
+              text-align: center;
+              padding: 0px;
+              border: none;
+              height: 24px;
+              width: 90px;
+            "
+          />
+        </div>
+      </div>
+      <div
+        class="input-group"
+        *ngIf="button.button === 'input' && button.type === 'date-range'"
+        style="width: 250px; height: 38px"
+      >
+        <div
+          class="input-group-text text-white btn btn-{{ button.color }} "
+          style="
+            border: none !important;
+            border: 1.4px solid #6259ca !important;
+          "
+        >
+          <i class="{{ button.icon }} tx-16 lh-0 op-6"></i>
+        </div>
+        <input
+          [disabled]="loadData"
+          placeholder="{{ button.title }}"
+          type="text"
+          name="selectd"
+          ngxDaterangepickerMd
+          [(ngModel)]="selected"
+          (ngModelChange)="selectDateRangeFunc(selected)"
+          class="form-control me-2 btn btn-{{ button.color }} text-white"
+          autocomplete="off"
+          style="
+            height: 38px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border: 1.4px solid #6259ca !important;
+          "
+        />
+      </div>
+
+      <div
+        *ngIf="button.button === 'input' && button.type === 'text'"
+        class="btn-group mt-2 mb-2 me-2"
+        style="max-height: 38px"
+      >
+        <button
+          [disabled]="loadData"
+          type="button"
+          class="btn btn-{{ button.color }} text-white"
+        >
+          <i
+            class="{{ button.icon }} tx-20 lh-0 op-6"
+            style="font-size: large !important"
+          ></i>
+        </button>
+        <div
+          class="btn btn-{{ button.color }}"
+          style="width: 110px"
+          (click)="changePlaceholder()"
+        >
+          <input
+            [disabled]="loadData"
+            [(ngModel)]="license_plates"
+            class="license-plates"
+            placeholder="{{ button.title }}"
+            autocomplete="off"
+            style="
+              background-color: transparent !important;
+              text-align: center;
+              padding: 0px;
+              border: none;
+              height: 24px;
+              width: 90px;
+            "
+          />
+        </div>
+      </div>
+
+      <div
+        (click)="getInputValue(warningmodal)"
+        *ngIf="button.button === 'button'"
+        class="btn btn-{{ button.color }} btn-icon text-white me-2"
+        style="width: 80px; margin-right: -1.5px !important"
+      >
+        <span>
+          <i class="fe fe-search"></i>
+        </span>
+        Tìm
+      </div>
+    </div>
+  </div>
+  <!-- PAGE-HEADER END -->
+</div>
+<ng-template #warningmodal let-modal>
+  <div class="modal-body text-center p-5">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+    <i class="fe fe-x-circle fs-50 text-danger lh-1 mb-5 d-inline-block"></i>
+    <h4 class="text-white">{{ message }}</h4>
+  </div>
+</ng-template>

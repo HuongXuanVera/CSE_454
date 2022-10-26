@@ -1,0 +1,15 @@
+.nav-icon{
+    width: 25px;
+    height: 25px;
+}
+::ng-deep{
+    a.text-primary:hover, a.text-primary:focus {
+        background-image: linear-gradient(to right, #22223D , #080880)!important;
+    }
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: #ffe4e433 !important;
+}
+input{
+    background:transparent !important;
+}

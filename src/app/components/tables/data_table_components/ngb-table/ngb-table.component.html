@@ -1,0 +1,97 @@
+<form class="table-responsive" *ngIf="!loader">
+  <div class="ms-auto pageheader-btn" style="display: table">
+    <div
+      (click)="exportFile()"
+      *ngIf="tableButton"
+      class="btn btn-{{ tableButton.color }} btn-icon text-white me-2 px-4 "
+      style="margin: 0px !important"
+    >
+      <span>
+        <i class="fe fe-download"></i>
+      </span>
+      {{ tableButton.title }}
+    </div>
+  </div>
+  <div class="form-group form-inline"></div>
+  <table *ngIf="dataReport.length > 0" class="table table-striped border m-0">
+    <thead>
+      <tr>
+        <th class="py-5">Ca</th>
+        <th class="py-5" *ngFor="let lane of dataReport[0].lanes">
+          {{ lane.key }}
+        </th>
+        <th class="py-5" scope="col">TỔNG CA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of dataReport">
+        <th class="py-2" scope="row">{{ item.shift }}</th>
+        <td class="py-4" *ngFor="let value of item.lanes">
+          {{ value.value }}
+        </td>
+        <td class="py-4">{{ item.total }}</td>
+      </tr>
+      <tr>
+        <td
+          class="py-4"
+          [attr.colspan]="laneNumber + 1"
+          style="text-align: center"
+        >
+          TỔNG SỐ
+        </td>
+        <td class="py-4" style="color: aquamarine">{{ totalVehicles }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div
+    *ngIf="dataReportAll.length > 0"
+    data-bs-spy="scroll"
+    data-bs-target="#navbar-example2"
+    data-bs-offset="0"
+    class="scrollspy-example"
+    tabindex="0"
+  >
+    <div *ngFor="let table of dataReportAll">
+      <h5 class="title-tollbooth text-capitalize">
+        {{ table.title }}
+      </h5>
+      <table class="table table-striped border mb-8 scroll">
+        <thead>
+          <tr *ngIf="table.data.length > 0">
+            <th class="py-5">Ca</th>
+            <th class="py-5" *ngFor="let lane of table.data[0].lanes">
+              {{ lane.key }}
+            </th>
+            <th class="py-5 h4" scope="col">TỔNG CA</th>
+          </tr>
+          <tr *ngIf="table.data.length === 0">
+            <h5> Không tìm thấy dữ liệu hiển thị</h5>
+          </tr>
+        </thead>
+        <tbody *ngIf="table.data.length > 0">
+          <tr *ngFor="let item of table.data">
+            <th class="py-2" scope="row">{{ item.shift }}</th>
+            <td class="py-4" *ngFor="let value of item.lanes">
+              {{ value.value }}
+            </td>
+            <td class="py-4 h4">{{ item.total }}</td>
+          </tr>
+          <tr>
+            <td
+              class="py-4 h4"
+              [attr.colspan]="laneNumber + 1"
+              style="text-align: center"
+            >
+              TỔNG SỐ
+            </td>
+            <td class="py-4 h4" style="color: aquamarine">
+              {{ totalVehicles }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
+<div class="d-flex justify-content-between p-2"></div>
+<app-load-data *ngIf="loader"></app-load-data>

@@ -1,0 +1,228 @@
+<app-header-breadcrumb
+  [title]="'Hậu Kiểm'"
+  [items]="['Quản lý']"
+  [active_item]="'Hậu kiểm'"
+  [headBreadBtns]="listHeadButtons"
+  [loadData]="loader"
+  (inputValue)="getSearchData($event)"
+></app-header-breadcrumb>
+
+<!-- ROW-1 OPEN -->
+<div class="row row-sm" *ngIf="hasValue && !loader">
+  <div class="col-xl-8">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">
+          {{ inputData.tollbooth.title }} - {{ inputData.lane.title }}:
+          {{ inputData.date }}
+        </div>
+      </div>
+      <div
+        class="card-body pb-0 pt-5 position-relative"
+        style="height: 28.9vw; object-fit: cover"
+      >
+        <video
+          (ended)="endVid()"
+          style="width: -webkit-fill-available; width: 100%; height: 85%"
+          crossorigin="anonymous"
+          class="video-play"
+          width="320"
+          height="240"
+          controls
+          #videoPlayer
+        >
+          <source [src]="video" type="video/mp4" id="source-video" />
+          <track
+            [src]="subtitle"
+            id="track_subtitle"
+            label="English"
+            kind="captions"
+            srclang="en"
+            default
+            class="track-subtitle"
+          />
+        </video>
+        <h6
+          class="text-center position-absolute"
+          style="bottom: 20%; left: 40%"
+          *ngIf="!hasSubtitle"
+        >
+          Không có dữ liệu đếm xe
+        </h6>
+        <div class="row row-sm" style="bottom: 5px">
+          <div class="col-xl-8">
+            <div class="card-body ps-0 py-0 position-absolute">
+              <ul
+                ngbNav
+                class="nav-pills nav-pills-circle"
+                id="tabs_3"
+                role="tablist"
+              >
+                <span class="my-auto me-2" style="color: #77778e">Tốc độ</span>
+                <li ngbNavItem *ngFor="let speed of listSpeed">
+                  <a
+                    ngbNavLink
+                    class="nav-link border w-5 h-6 justify-content-center br-100 m-2"
+                    id="tab21"
+                    data-toggle="tab"
+                    role="tab"
+                    aria-controls="tab1"
+                    aria-selected="false"
+                    (click)="changeSpeed(speed.value)"
+                  >
+                    <span class="nav-link-icon d-block text-center mx-auto">{{
+                      speed.title
+                    }}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="card-body ps-0 py-0 position-absolute">
+              <label class="my-4 custom-switch ps-0">
+                <input
+                  type="checkbox"
+                  name="custom-switch-checkbox"
+                  class="custom-switch-input"
+                  [checked]="autoPlay"
+                  (click)="autoPlayList()"
+                />
+                <span class="custom-switch-indicator"></span>
+                <span class="custom-switch-description mg-l-10"
+                  >Chạy video tự động</span
+                >
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4" *ngIf="fileVideos.length > 0">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Danh sách video</div>
+      </div>
+      <div
+        class="card-body overflow-scroll"
+        style="height: 28.9vw; object-fit: cover"
+      >
+        <div ngbNav class="nav-pills d-block">
+          <div
+            class="example"
+            style="padding: 0rem !important; margin-bottom: 1.5rem"
+            *ngFor="let item of fileVideos; let i = index"
+          >
+            <div class="d-flex" class="nav-item">
+              <div class="text-center d-grid">
+                <i class="pe-7s-album fs-50 text-white p-3"></i>
+                <span class="mb-2">{{ item.hour }} giờ</span>
+              </div>
+              <div class="ps-2 flex-column" id="ChatList">
+                <ul
+                  class="list-group list-group-transparent mb-0 mail-inbox"
+                  style="max-width: 242px"
+                >
+                  <li
+                    ngbNavItem
+                    *ngFor="let child of item.group; let y = index"
+                    class="d-flex align-items-center me-4"
+                  >
+                    <a
+                      ngbNavLink
+                      style="padding-left: 5%"
+                      class="nav-link text-white {{ i }}{{ y }}"
+                      id="tab21"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="tab1"
+                      aria-selected="false"
+                      (click)="getSource(child, i, y)"
+                    >
+                      <i
+                        [ngClass]="
+                          child.hasData
+                            ? 'pe-7s-film me-2'
+                            : 'pe-7s-attention me-2'
+                        "
+                        [ngStyle]="{
+                          color: child.hasData ? '#22c03ce6' : '#eed933e6'
+                        }"
+                      ></i>
+                      {{ child.fileName.replace(".vtt", "") }}
+                    </a>
+                  </li>
+                  <li
+                    ngbNavItem
+                    *ngFor="let child of item.group; let y = index"
+                    class="d-flex align-items-center me-4"
+                  >
+                    <a
+                      ngbNavLink
+                      style="padding-left: 5%"
+                      class="nav-link text-white {{ i }}{{ y }}"
+                      id="tab21"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="tab1"
+                      aria-selected="false"
+                      (click)="getSource(child, i, y)"
+                    >
+                      <i
+                        [ngClass]="
+                          child.hasData
+                            ? 'pe-7s-film me-2'
+                            : 'pe-7s-attention me-2'
+                        "
+                        [ngStyle]="{
+                          color: child.hasData ? '#22c03ce6' : '#eed933e6'
+                        }"
+                      ></i>
+                      {{ child.fileName.replace(".vtt", "") }}
+                    </a>
+                  </li>
+                  <li
+                    ngbNavItem
+                    *ngFor="let child of item.group; let y = index"
+                    class="d-flex align-items-center me-4"
+                  >
+                    <a
+                      ngbNavLink
+                      style="padding-left: 5%"
+                      class="nav-link text-white {{ i }}{{ y }}"
+                      id="tab21"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="tab1"
+                      aria-selected="false"
+                      (click)="getSource(child, i, y)"
+                    >
+                      <i
+                        [ngClass]="
+                          child.hasData
+                            ? 'pe-7s-film me-2'
+                            : 'pe-7s-attention me-2'
+                        "
+                        [ngStyle]="{
+                          color: child.hasData ? '#22c03ce6' : '#eed933e6'
+                        }"
+                      ></i>
+                      {{ child.fileName.replace(".vtt", "") }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body scroll d-none">
+        <!-- content -->
+        <div class="content vscroll h-300" id="default"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-default *ngIf="!loader && !hasValue"></app-default>
+<app-load-data *ngIf="loader"></app-load-data>

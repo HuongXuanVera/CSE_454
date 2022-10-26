@@ -1,0 +1,137 @@
+<app-header-breadcrumb
+  [title]="'Thông Tin Phương Tiện'"
+  [items]="['Quản lý']"
+  [active_item]="'Thôngh tin phương tiện'"
+  [headBreadBtns]="listHeadButtons"
+  [loadData]="loader"
+  (inputValue)="getSearchData($event)"
+></app-header-breadcrumb>
+<div class="row row-sm">
+  <div class="col-xl-12">
+    <div class="card mg-b-20" *ngIf="hasValue">
+      <div class="card-header pb-0">
+        <div>
+          <h6 class="main-content-label mb-1">
+            {{ inputData.tollbooth.title }} :
+            {{ inputData.date_range.startTime }}
+            {{ inputData.date_range.endTime }}
+          </h6>
+          <p class="text-muted card-sub-title">
+            Truy xuất thông tin phương tiện dựa trên biển số.
+          </p>
+        </div>
+      </div>
+      <div class="card-body">
+        <ngx-datatable
+          style="
+            height: 25vw !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+          "
+          class="bootstrap table-responsive material"
+          [rows]="licenses"
+          [columns]="columns"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [rowHeight]="50"
+          [summaryRow]="true"
+          [scrollbarV]="true"
+        >
+          <ngx-datatable-column
+            [width]="100"
+            name="Ngày"
+            prop="date"
+            style="margin-left: 10px"
+          >
+            <ng-template
+              let-value="value"
+              ngx-datatable-cell-template
+              class="ps-2 py-3 align-middle"
+            >
+              <span class="align-middle">{{ value }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column [width]="100" name="Giờ" prop="hour">
+            <ng-template
+              let-value="value"
+              ngx-datatable-cell-template
+              class="ps-2 py-3 align-middle"
+            >
+              <span>{{ value }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            [width]="100"
+            name="Trạm Thu Phí"
+            prop="station"
+          >
+            <ng-template
+              let-value="value"
+              ngx-datatable-cell-template
+              class="ps-2 py-3 align-middle"
+            >
+              <span>{{ value }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column [width]="100" name="Làn Xe" prop="lane">
+            <ng-template
+              let-value="value"
+              ngx-datatable-cell-template
+              class="ps-2 py-3 align-middle"
+            >
+              <span>{{ value }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column
+            [width]="100"
+            name="Hình Ảnh"
+            prop="img"
+            [sortable]="false"
+          >
+            <ng-template
+              let-value="value"
+              let-rowIndex="rowIndex"
+              ngx-datatable-cell-template
+              class="ps-2 py-3 align-middle"
+            >
+              <img
+                *ngIf="value.length > 0"
+                [src]="value"
+                alt="img"
+                style="max-width: 50px; cursor: pointer"
+                (click)="openImg(rowIndex, warningmodal)"
+              />
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+        <span *ngIf="licenses.length === 0"
+          >Không tìm thấy dữ liệu phù hợp!</span
+        >
+      </div>
+    </div>
+  </div>
+</div>
+<app-default *ngIf="!loader && !hasValue"></app-default>
+<app-load-data *ngIf="loader"></app-load-data>
+<ng-template #warningmodal let-modal>
+  <div class="text-center">
+    <div class="card-header bg-primary br-tr-3 br-tl-3">
+      <h3 class="card-title text-white">Hình Ảnh</h3>
+      <div class="card-options">
+        <button
+          type="button"
+          class="btn-close text-white"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        ></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <img [src]="object.img" alt="img" style="max-width: 400px" />
+    </div>
+    <div class="card-footer">
+      <span>Ngày: {{ object.date }}  Giờ: {{ object.hour }}</span
+      ><br />
+      <span>{{ object.station }} {{ object.lane }}</span>
+    </div>
+  </div>
+</ng-template>

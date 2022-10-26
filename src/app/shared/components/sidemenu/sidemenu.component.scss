@@ -1,0 +1,31 @@
+::ng-deep {
+  .horizontal-hover .app-sidebar .has-sub {
+    pointer-events: none;
+  }
+  .side-menu__item.active {
+    text-decoration: none;
+    color: #ffffff;
+    background: linear-gradient(
+      to bottom right,
+      var(#FFFFFF) 0%,
+      var(#000000) 100%
+    )!important;
+    border-radius: 0 60px 60px 0;
+  }
+  .horizontal app-sidemenu perfect-scrollbar {
+    position: static;
+  }
+
+  body:not(.horizontal) .badge + .angle {
+    display: none;
+  }
+  .layout-boxed .app-sidebar.fixed-header.visible-title {
+    max-width: 1400px;
+  }
+
+  .rtl {
+    app-sidemenu .angle {
+      transform: rotate(90deg);
+    }
+  }
+}

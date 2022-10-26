@@ -1,0 +1,95 @@
+<!-- Mobile Header -->
+<div class="app-header header sticky" style="height: 75px">
+  <div class="container-fluid main-container">
+    <div class="d-flex align-items-center">
+      <a
+        aria-label="Hide Sidebar"
+        class="app-sidebar__toggle"
+        appSidemenuToggle
+      ></a>
+      <!-- sidebar-toggle-->
+
+      <div class="responsive-logo">
+        <a routerLink="/dashboard" class="header-logo">
+          <!-- <img
+            src="./assets/images/brand/logo-3.png"
+            class="mobile-logo logo-1"
+            alt="logo"
+          /> -->
+          <div class="dark-logo-1">
+            <img
+              src="../../../../assets/images/brand/logo_becamex.png"
+              class="mobile-logo"
+              alt="logo"
+            />
+          </div>
+        </a>
+      </div>
+
+      <div class="d-flex order-lg-2 ms-auto header-right-icons">
+        <button
+          class="navbar-toggler navresponsive-toggler d-lg-none ms-auto"
+          type="button"
+          (click)="collapse.toggle()"
+          [attr.aria-expanded]="!isCollapsed"
+        >
+          <span
+            class="navbar-toggler-icon fe fe-more-vertical text-dark"
+          ></span>
+        </button>
+        <div class="navbar navbar-collapse responsive-navbar p-0">
+          <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContent-4"
+            #collapse="ngbCollapse"
+            [(ngbCollapse)]="isCollapsed"
+          >
+            <div class="d-flex order-lg-2">
+              <div ngbDropdown class="d-block d-lg-none">
+                <div ngbDropdownMenu class="header-search dropdown-menu-start">
+                  <div class="input-group w-100 p-2">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Search...."
+                    />
+                    <div class="input-group-text btn btn-primary">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h5 class="m-0 mt-4 me-2 text-white">
+                Xin Chào, <span class="text-uppercase">{{ username }} </span>
+              </h5>
+              <div ngbDropdown class="d-md-flex profile-1">
+                <a class="nav-link icon text-center" ngbDropdownToggle>
+                  <i class="fe fe-user"></i>
+                  <!-- <span class="pulse"></span> -->
+                </a>
+                <div
+                  ngbDropdownMenu
+                  class="dropdown-menu-end dropdown-menu-arrow"
+                >
+                  <div class="drop-heading">
+                    <div class="text-center">
+                      <h5 class="text-dark mb-0">{{ username }}</h5>
+                    </div>
+                  </div>
+                  <div class="dropdown-divider m-0"></div>
+                  <a
+                    class="dropdown-item"
+                    (click)="signout()"
+                    style="cursor: pointer"
+                  >
+                    <i class="dropdown-icon fe fe-alert-circle"></i> Đăng Xuất
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

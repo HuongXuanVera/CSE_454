@@ -1,0 +1,194 @@
+<div
+  class="login-img"
+  style="background: linear-gradient(90deg, #22213d, #080879) !important"
+>
+  <div
+    class="page"
+    style="
+      background-image: url('../../../assets/images/background/tollbooth.png');
+      background-size: 46%;
+      background-repeat: no-repeat;
+      background-position-x: right;
+      background-position-y: bottom;
+    "
+  >
+    <div class="">
+      <div class="col col-login mx-auto"></div>
+      <div class="login-logo">
+        <img
+          src="../../../../assets/images/brand/logo_becamex.png"
+          class="mobile-logo"
+          alt="logo"
+          style="width: 10%"
+        />
+        <img
+          src="../../../assets/images/brand/Logo-becamex-ijc-.png"
+          class="mobile-logo"
+          alt="logo"
+          style="width: 10%"
+        />
+      </div>
+      <ul
+        ngbNav
+        #nav="ngbNav"
+        [(activeId)]="active"
+        class="nav-pills container-login100"
+      >
+        <li ngbNavItem="Firebase">
+          <ng-template ngbNavContent>
+            <div class="wrap-login100 p-0">
+              <div class="card-body">
+                <form (ngSubmit)="login()" class="login100-form validate-form">
+                  <span class="login100-form-title"> Đăng Nhập Hệ Thống </span>
+                  <div class="wrap-input100 validate-input">
+                    <input
+                      type="text"
+                      name="username"
+                      [(ngModel)]="username"
+                      class="form-control input100"
+                      placeholder="Tên đăng nhập"
+                      required
+                      style="
+                        color: #dedefd;
+                        background-color: transparent;
+                        border: none;
+                        border-radius: 0px;
+                        border-bottom: 1px solid #dedefd;
+                      "
+                    />
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                      <i class="zmdi zmdi-email" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  <div class="wrap-input100 validate-input">
+                    <input
+                      type="password"
+                      name="password"
+                      class="form-control input100"
+                      [(ngModel)]="password"
+                      placeholder="Mật khẩu"
+                      required
+                      style="
+                        color: #dedefd;
+                        background-color: transparent;
+                        border: none;
+                        border-radius: 0px;
+                        border-bottom: 0.5px solid #dedefd;
+                      "
+                    />
+                    <span class="focus-input100" style="color: #dedefd"></span>
+                    <span class="symbol-input100">
+                      <i class="zmdi zmdi-lock" aria-hidden="true"></i>
+                    </span>
+                    <span
+                      style="
+                        position: absolute;
+                        right: 0px;
+                        cursor: pointer;
+                        top: 50%;
+                      "
+                    >
+                      <i
+                        class="fa"
+                        [ngClass]="{
+                          'fa-eye-slash': !fieldTextType,
+                          'fa-eye': fieldTextType
+                        }"
+                        style="cursor: pointer"
+                        (click)="toggleFieldTextType()"
+                      ></i>
+                    </span>
+                  </div>
+                  <div class="form-group">
+                    <p *ngIf="errorMessage.length > 0" class="text-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </div>
+                </form>
+                <div class="container-login100-form-btn">
+                  <button
+                    type="submit"
+                    class="login100-form-btn"
+                    (click)="login()"
+                  >
+                    Đăng Nhập
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li ngbNavItem="Angular">
+          <ng-template ngbNavContent>
+            <div class="wrap-login100 p-0">
+              <div class="card-body">
+                <form
+                  [formGroup]="loginForm"
+                  class="login100-form validate-form"
+                  (ngSubmit)="Submit()"
+                >
+                  <span class="login100-form-title"> Đăng nhập hệ thống </span>
+
+                  <div class="wrap-input100 validate-input">
+                    <input
+                      type="text"
+                      class="form-control input100"
+                      placeholder="Username"
+                      autocomplete
+                      formControlName="username"
+                    />
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                      <i class="zmdi zmdi-email" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  <div class="wrap-input100 validate-input">
+                    <input
+                      type="password"
+                      class="form-control input100"
+                      placeholder="Password"
+                      autocomplete
+                      formControlName="password"
+                    />
+                    <span class="focus-input100"></span>
+                    <span class="symbol-input100">
+                      <i class="zmdi zmdi-lock" aria-hidden="true"></i>
+                    </span>
+                  </div>
+                  {{ error }}
+                  <div class="container-login100-form-btn">
+                    <button
+                      [disabled]="!loginForm.valid"
+                      type="submit"
+                      class="login100-form-btn btn-primary"
+                      (click)="login()"
+                    >
+                      Đăng nhập
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      <div
+        class="container-login100"
+        style="justify-content: space-between; padding: 2% 8%"
+      >
+        <div
+          class="login-card-title"
+          style="width: 30%; text-align: center; width: 42%"
+        >
+          <h1 style="font-size: 3.5rem; font-weight: 750">
+            Hệ Thống Giám Sát Và Quản Lý Trạm Thu Phí
+          </h1>
+        </div>
+        <div class="wrap-login100 p-0">
+          <div [ngbNavOutlet]="nav" class="ml-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

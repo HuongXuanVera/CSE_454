@@ -63,7 +63,7 @@
                   </div>
                   <div class="wrap-input100 validate-input">
                     <input
-                      type="password"
+                      [type]="fieldTextType ? 'text' : 'password'"
                       name="password"
                       class="form-control input100"
                       [(ngModel)]="password"
